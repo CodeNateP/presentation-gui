@@ -4,8 +4,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 import javax.swing.BoxLayout;
@@ -61,26 +59,13 @@ public class Login extends JFrame{
 			if (client.login(username, password)) {
 				//bring up user list
 				messenger = new Messenger();
-				messenger.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-			
+				messenger.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				
 				MessagePane mess = new MessagePane(client, username);
 				messenger.getContentPane().add(mess);
 				
 				UserListPane userList = new UserListPane(client, messenger, mess);
 				messenger.getContentPane().add(new JScrollPane(userList));
-				
-				messenger.addWindowListener(new WindowAdapter() {
-				       @Override
-				       public void windowClosing(WindowEvent event) {
-				            try {
-								client.logoff();
-								messenger.dispose();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-				        }
-				    });
-				
 				
 				messenger.setLayout(new GridLayout(1,2));
 				messenger.setSize(600,600);

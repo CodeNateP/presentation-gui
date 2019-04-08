@@ -19,6 +19,16 @@ public class UserListPane extends JPanel implements StatusListener{
 		setLayout(new BorderLayout());
 		add(new JScrollPane(userListGUI), BorderLayout.CENTER);
 		
+		userListGUI.addMouseListener(new MouseAdapter(){
+			@Override
+			public void mouseClicked(MouseEvent e) {
+					String username = userListGUI.getSelectedValue();
+					MessagePane messagePane = new MessagePane(client, username);
+					
+					messenger.append(messenger, mess, messagePane);
+					
+			}
+		});
 	}
 
 	@Override

@@ -28,7 +28,7 @@ public class Client {
 
 	
 	public void msgOut (String reciever, String msg) throws IOException {
-		String line = "msg " +reciever+ " " + msg + "\n";
+		String line = "msg" + " " + reciever + " " + msg + "\n";
 		oStream.write(line.getBytes());
 	}
 
@@ -49,7 +49,7 @@ public class Client {
 	
 	public void logoff() throws IOException{
 		String line = "logoff\n";
-		oStream.write(line.getBytes());	
+		oStream.write(line.getBytes());
 	}
 
 	public void startLoop() {

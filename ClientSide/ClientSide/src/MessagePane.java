@@ -14,11 +14,11 @@ public class MessagePane extends JPanel implements MessageListener{
 	private JList<String> messageList = new JList<>(listModel);
 	private JTextField inputField = new JTextField();
 
-	public MessagePane(Client client, String username) {
+	public MessagePane(Client client, String login) {
 		this.client = client;
-		this.username = username;
+		this.username = login;
 		
-		this.client.addMessageListener(this);
+		client.addMessageListener(this);
 		
 		setLayout(new BorderLayout());
 		add(new JScrollPane(messageList), BorderLayout.CENTER);
@@ -29,10 +29,9 @@ public class MessagePane extends JPanel implements MessageListener{
 			public void actionPerformed (ActionEvent e) {
 			try {
 				String text = inputField.getText();
-				if (!text.equals(null) || !text.equals("")){
-					client.msgOut(username , text);
-					inputField.setText("");
-				}
+				client.msgOut(login, text);
+				listModel.addElement("you-> " + text);
+				inputField.setText("");
 				
 			}catch(IOException e1){
 				e1.printStackTrace();
@@ -44,13 +43,11 @@ public class MessagePane extends JPanel implements MessageListener{
 
 	@Override
 	public void onMessage(String fromLogin, String msgBody) {
+		if (username.equalsIgnoreCase(fromLogin)) {
 			String line = fromLogin + "-> " + msgBody;
-			listModel.addElement(line);		
-	}
-	
-	@Override
-	public void onLogoff(String username) {
-		this.client.removeMessageListener(this);
+			listModel.addElement(line);
+		}
+		
 	}
 	
 }

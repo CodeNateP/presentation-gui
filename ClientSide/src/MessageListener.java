@@ -1,4 +1,5 @@
 
 public interface MessageListener {
-	public void onMessage(String fromLogin, String msgBody);
+	public void onMessage(String Login, String msgBody);
+	public void onLogoff(String username);
 }
